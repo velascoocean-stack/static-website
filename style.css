@@ -1,0 +1,75 @@
+tailwind.config = {
+    darkMode: 'class',
+    theme: {
+        extend: {
+            colors: {
+                gold: {
+                    300: '#f6e05e',
+                    400: '#f1c40f',
+                    500: '#d4af37',
+                    600: '#aa7c11',
+                    700: '#855e0c',
+                },
+                charcoal: '#121212',
+                cardDark: '#1e1e1e',
+                warmBrown: '#2a1a08',
+            },
+            fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+                serif: ['Playfair Display', 'serif'],
+            }
+        }
+    }
+};
+
+/* Base Styles */
+body {
+    background-color: #0d0d0d;
+    color: #e5e5e5;
+    font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, .font-serif {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Custom Glow Effects */
+.gold-glow {
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+}
+
+.gold-glow-sm {
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+}
+
+.gold-border-glow:focus {
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #121212;
+}
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #d4af37;
+}
+
+/* Glassmorphism Classes */
+.glass-card {
+    background: rgba(25, 20, 18, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.glass-nav {
+    background: rgba(13, 11, 10, 0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
