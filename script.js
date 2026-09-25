@@ -1,4 +1,3 @@
-// Dishes Array featuring all 14 requested Filipino Dishes with exact URLs
 const menuData = [
     {
         id: 1,
@@ -128,7 +127,6 @@ const menuData = [
     }
 ];
 
-// Render menu grid items
 function renderMenu(items) {
     const container = document.getElementById('menu-grid');
     if (!container) return;
@@ -153,8 +151,6 @@ function renderMenu(items) {
         </div>
     `).join('');
 }
-
-// Filter menu by category
 function filterMenu(category) {
     const buttons = document.querySelectorAll('#filter-buttons .filter-btn');
     buttons.forEach(btn => {
@@ -173,7 +169,6 @@ function filterMenu(category) {
     }
 }
 
-// Dish Detail Modal
 function openDishModal(id) {
     const dish = menuData.find(d => d.id === id);
     if (!dish) return;
@@ -192,7 +187,6 @@ function closeDishModal() {
     if (modal) modal.classList.add('hidden');
 }
 
-// Image Lightbox Modal
 function openImageModal(src, caption) {
     document.getElementById('full-modal-img').src = src;
     document.getElementById('full-modal-caption').innerText = caption;
@@ -203,13 +197,11 @@ function closeImageModal() {
     document.getElementById('imageModal').classList.add('hidden');
 }
 
-// Mobile Drawer Toggle
 function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     if (menu) menu.classList.toggle('hidden');
 }
 
-// Top Grand Opening Banner Controls
 let isBannerMinimized = false;
 function toggleBannerContent() {
     const banner = document.getElementById('opening-banner');
@@ -318,16 +310,13 @@ function updateCountdown() {
 window.onload = function() {
     renderMenu(menuData);
     document.getElementById('year').innerText = new Date().getFullYear();
-    
-    // Start Live Manila Clock
+
     updateLiveClock();
     setInterval(updateLiveClock, 1000);
 
-    // Start Countdown Timer
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Set minimum date input for reservation
     const today = new Date().toISOString().split('T')[0];
     const dateInput = document.getElementById('res-date');
     if (dateInput) dateInput.min = today;
