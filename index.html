@@ -5,98 +5,196 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kultura | Authentic Filipino Fine Dining</title>
     
-    <!-- External Scripts & Styles -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            300: '#f6e05e',
+                            400: '#e5a93b',
+                            500: '#d4af37',
+                            600: '#aa7c11',
+                            700: '#855e0c',
+                        },
+                        charcoal: '#0d0d0d',
+                        cardDark: '#1e1e1e',
+                        warmBrown: '#2a1a08',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts & Font Awesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Custom CSS -->
+    <!-- External Custom Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-charcoal text-gray-200 antialiased overflow-x-hidden">
 
-    <header class="fixed top-0 left-0 w-full z-40 glass-nav transition-all duration-300">
+    <!-- Collapsible Grand Opening Banner Header -->
+    <div id="opening-banner" class="bg-gradient-to-r from-amber-950 via-neutral-900 to-amber-950 text-white border-b border-gold-500/30 fixed top-0 left-0 w-full z-50 banner-transition max-h-[300px] py-2.5 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
+            <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-full bg-gold-500/20 border border-gold-500/50 flex items-center justify-center shrink-0 animate-pulse">
+                    <i class="fa-solid fa-sparkles text-gold-400 text-sm"></i>
+                </span>
+                <div>
+                    <span class="text-gold-400 text-xs font-bold uppercase tracking-wider block">Grand Opening Announcement</span>
+                    <p class="text-xs sm:text-sm font-medium text-gray-200">
+                        Join us on <span class="text-white font-bold underline decoration-gold-500">February 1, 2027</span> for our Official Flagship Launch!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Countdown Timer Display -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="countdown-box px-2.5 py-1 rounded-lg text-center min-w-[50px]">
+                    <span id="cd-days" class="text-base sm:text-lg font-bold font-mono text-gold-400">00</span>
+                    <span class="block text-[9px] text-gray-400 uppercase tracking-tighter">Days</span>
+                </div>
+                <span class="text-gold-500 font-bold text-sm">:</span>
+                <div class="countdown-box px-2.5 py-1 rounded-lg text-center min-w-[50px]">
+                    <span id="cd-hours" class="text-base sm:text-lg font-bold font-mono text-gold-400">00</span>
+                    <span class="block text-[9px] text-gray-400 uppercase tracking-tighter">Hours</span>
+                </div>
+                <span class="text-gold-500 font-bold text-sm">:</span>
+                <div class="countdown-box px-2.5 py-1 rounded-lg text-center min-w-[50px]">
+                    <span id="cd-mins" class="text-base sm:text-lg font-bold font-mono text-gold-400">00</span>
+                    <span class="block text-[9px] text-gray-400 uppercase tracking-tighter">Mins</span>
+                </div>
+                <span class="text-gold-500 font-bold text-sm">:</span>
+                <div class="countdown-box px-2.5 py-1 rounded-lg text-center min-w-[50px]">
+                    <span id="cd-secs" class="text-base sm:text-lg font-bold font-mono text-gold-400">00</span>
+                    <span class="block text-[9px] text-gray-400 uppercase tracking-tighter">Secs</span>
+                </div>
+            </div>
+
+            <!-- Banner Controls -->
+            <div class="flex items-center gap-2 shrink-0">
+                <button onclick="toggleBannerContent()" id="banner-toggle-btn" class="text-xs px-2.5 py-1 rounded-md bg-black/40 hover:bg-black/80 border border-gray-700 text-gray-300 flex items-center gap-1.5 transition">
+                    <i id="banner-toggle-icon" class="fa-solid fa-chevron-up text-[10px]"></i>
+                    <span id="banner-toggle-text" class="hidden sm:inline">Minimize</span>
+                </button>
+                <button onclick="closeBanner()" class="text-gray-400 hover:text-white p-1 text-sm transition" title="Close banner">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation Header -->
+    <header id="main-header" class="fixed left-0 w-full z-40 glass-nav transition-all duration-300 top-[110px] sm:top-[60px]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
                 <a href="#" class="flex items-center gap-3 group">
-                    <div class="w-10 h-10 rounded-full border-2 border-gold-500 flex items-center justify-center bg-gold-500/10 group-hover:bg-gold-500 transition duration-300">
-                        <span class="font-serif font-bold text-gold-500 group-hover:text-black transition text-lg">K</span>
+                    <div class="w-10 h-10 rounded-full border-2 border-gold-400 flex items-center justify-center bg-gold-400/10 group-hover:bg-gold-400 transition duration-300">
+                        <span class="font-serif font-bold text-gold-400 group-hover:text-black transition text-lg">K</span>
                     </div>
-                    <span class="text-2xl font-serif font-bold tracking-wider text-white">KULTURA <span class="text-gold-500 text-xs block font-sans tracking-widest font-normal uppercase">Filipino Cuisine</span></span>
+                    <span class="text-xl sm:text-2xl font-serif font-bold tracking-wider text-white">KULTURA <span class="text-gold-400 text-[10px] sm:text-xs block font-sans tracking-widest font-normal uppercase">Filipino Cuisine</span></span>
                 </a>
 
+                <!-- Desktop Navigation Links -->
                 <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
-                    <a href="#home" class="hover:text-gold-500 transition duration-200 text-gold-500">Home</a>
-                    <a href="#about" class="hover:text-gold-500 transition duration-200 text-gray-300">About</a>
-                    <a href="#menu" class="hover:text-gold-500 transition duration-200 text-gray-300">Our Menu</a>
-                    <a href="#gallery" class="hover:text-gold-500 transition duration-200 text-gray-300">Gallery</a>
-                    <a href="#contact" class="hover:text-gold-500 transition duration-200 text-gray-300">Contact & Book</a>
+                    <a href="#home" class="hover:text-gold-400 transition duration-200 text-gold-400">Home</a>
+                    <a href="#about" class="hover:text-gold-400 transition duration-200 text-gray-300">About</a>
+                    <a href="#menu" class="hover:text-gold-400 transition duration-200 text-gray-300">Our Menu</a>
+                    <a href="#gallery" class="hover:text-gold-400 transition duration-200 text-gray-300">Gallery</a>
+                    <a href="#contact" class="hover:text-gold-400 transition duration-200 text-gray-300">Contact & Book</a>
                 </nav>
 
-                <div class="hidden md:flex items-center">
-                    <button onclick="openReservationModal()" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-black font-semibold text-sm hover:from-gold-400 hover:to-gold-500 transition duration-300 shadow-md gold-glow-sm flex items-center gap-2">
+                <!-- Actions & Live Manila Clock -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <!-- Live Clock Badge -->
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-gold-500/30 text-xs font-mono text-gold-400">
+                        <i class="fa-regular fa-clock text-gold-400 text-xs animate-pulse"></i>
+                        <span id="live-header-clock">--:--:-- PM</span>
+                        <span class="text-[9px] text-gray-400 font-sans uppercase">PHT</span>
+                    </div>
+
+                    <button onclick="openReservationModal()" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-400 to-gold-600 text-black font-semibold text-xs hover:from-gold-300 hover:to-gold-500 transition duration-300 shadow-md gold-glow-sm flex items-center gap-2">
                         <i class="fa-regular fa-calendar-check"></i> Reserve Table
                     </button>
                 </div>
 
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-gold-500 focus:outline-none p-2" aria-label="Toggle Navigation">
+                <!-- Mobile Menu Toggle Button -->
+                <div class="md:hidden flex items-center gap-3">
+                    <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 border border-gold-500/30 text-[11px] font-mono text-gold-400">
+                        <i class="fa-regular fa-clock text-[10px]"></i>
+                        <span id="live-header-clock-mobile">--:-- PM</span>
+                    </div>
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-gold-400 focus:outline-none p-2" aria-label="Toggle Navigation">
                         <i class="fa-solid fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
         </div>
 
+        <!-- Mobile Drawer -->
         <div id="mobile-menu" class="hidden md:hidden glass-nav border-t border-gold-500/20 px-4 pt-2 pb-6 space-y-3">
-            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 text-gold-500 font-medium">Home</a>
-            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-500">About</a>
-            <a href="#menu" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-500">Our Menu</a>
-            <a href="#gallery" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-500">Gallery</a>
-            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-500">Contact & Book</a>
-            <button onclick="openReservationModal(); toggleMobileMenu()" class="w-full mt-2 py-3 rounded-xl bg-gold-500 text-black font-bold text-center">
+            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 text-gold-400 font-medium">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-400">About</a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-400">Our Menu</a>
+            <a href="#gallery" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-400">Gallery</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-400">Contact & Book</a>
+            <button onclick="openReservationModal(); toggleMobileMenu()" class="w-full mt-2 py-3 rounded-xl bg-gold-400 text-black font-bold text-center text-sm">
                 Reserve Table
             </button>
         </div>
     </header>
 
-    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-36 pb-20 overflow-hidden">
+        <!-- Hero Background Image & Gradient Overlay -->
         <div class="absolute inset-0 z-0">
             <img src="https://images.squarespace-cdn.com/content/v1/5fa1522044bdda192713063c/ec48138e-70aa-46c1-ab34-62ddc4410f9b/Buffet+101+International+Cuisine+in+Glorietta?format=2500w" 
-                 alt="Kultura Restaurant Atmosphere" 
+                 alt="Kultura Restaurant Flagship Architecture" 
                  class="w-full h-full object-cover scale-105 filter brightness-75 transition-transform duration-10000"
-                 onerror="this.src='https://placehold.co/1920x1080/1a1008/d4af37?text=Kultura+Fine+Dining'">
+                 onerror="this.src='https://placehold.co/1920x1080/1a1008/e5a93b?text=Kultura+Fine+Dining'">
             <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/80 to-black/50"></div>
         </div>
 
-        <div class="relative z-10 max-w-5xl mx-auto px-4 text-center py-20">
+        <div class="relative z-10 max-w-5xl mx-auto px-4 text-center">
             <span class="inline-block px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs sm:text-sm font-semibold tracking-widest uppercase mb-6 backdrop-blur-md">
-                Experience Heritage Dining
+                Don Pablo Building, Amorsolo St, Legaspi Village
             </span>
             <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-bold text-white tracking-tight leading-tight mb-6">
-                Savor Authentic <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-gold-500 to-amber-200">Filipino Flavors</span>
+                Savor Authentic <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-amber-200">Filipino Gastronomy</span>
             </h1>
             <p class="max-w-2xl mx-auto text-base sm:text-lg text-gray-300 font-light leading-relaxed mb-10">
-                Immerse yourself in a grand celebration of the Philippines’ most cherished recipes, prepared with heirloom traditions, finest ingredients, and genuine Filipino hospitality.
+                Immerse yourself in a grand celebration of the Philippines’ most cherished recipes, prepared with heirloom traditions, finest local ingredients, and genuine hospitality.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-                <a href="#menu" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gold-500 text-black font-bold hover:bg-gold-400 transition duration-300 shadow-lg gold-glow flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-utensils"></i> Explore Menu
+                <a href="#menu" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gold-400 text-black font-bold hover:bg-gold-300 transition duration-300 shadow-lg gold-glow flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-utensils"></i> Explore Our 14 Signature Dishes
                 </a>
                 <button onclick="openReservationModal()" class="w-full sm:w-auto px-8 py-4 rounded-full glass-card text-white font-semibold border border-gold-500/40 hover:bg-gold-500/10 transition duration-300 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-chair text-gold-400"></i> Reserve a Table
                 </button>
             </div>
 
+            <!-- Quick Info Ribbon -->
             <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 glass-card p-6 rounded-2xl max-w-4xl mx-auto border border-gold-500/20">
                 <div class="text-center border-r border-gray-800 last:border-none md:last:border-none">
-                    <p class="text-gold-400 text-xs uppercase tracking-wider">Atmosphere</p>
-                    <p class="text-white font-medium mt-1">Grand & Elegant</p>
+                    <p class="text-gold-400 text-xs uppercase tracking-wider">Opening Date</p>
+                    <p class="text-white font-medium mt-1">Feb 1, 2027</p>
                 </div>
                 <div class="text-center md:border-r border-gray-800">
-                    <p class="text-gold-400 text-xs uppercase tracking-wider">Cuisine</p>
-                    <p class="text-white font-medium mt-1">100% Authentic</p>
+                    <p class="text-gold-400 text-xs uppercase tracking-wider">Hotline</p>
+                    <p class="text-white font-medium mt-1">0543-112-5689</p>
                 </div>
                 <div class="text-center border-r border-gray-800">
                     <p class="text-gold-400 text-xs uppercase tracking-wider">Location</p>
@@ -110,7 +208,8 @@
         </div>
     </section>
 
-    <section id="about" class="py-24 relative bg-charcoal">
+    <!-- About Section -->
+    <section id="about" class="py-24 relative bg-charcoal border-t border-gold-500/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <div class="relative">
@@ -118,21 +217,21 @@
                         <img src="https://images.squarespace-cdn.com/content/v1/5fa1522044bdda192713063c/ec48138e-70aa-46c1-ab34-62ddc4410f9b/Buffet+101+International+Cuisine+in+Glorietta?format=2500w" 
                              alt="Interior Dining Room" 
                              class="w-full h-[450px] object-cover hover:scale-105 transition duration-700"
-                             onerror="this.src='https://placehold.co/800x600/2a2a2a/d4af37?text=Kultura+Venue'">
+                             onerror="this.src='https://placehold.co/800x600/2a2a2a/e5a93b?text=Kultura+Venue'">
                     </div>
                     <div class="absolute -bottom-6 -right-6 w-full h-full border-2 border-gold-500/20 rounded-2xl -z-0 hidden sm:block"></div>
                 </div>
 
                 <div>
-                    <span class="text-gold-500 font-semibold tracking-widest uppercase text-sm">Welcome to Kultura</span>
+                    <span class="text-gold-400 font-semibold tracking-widest uppercase text-sm">Welcome to Kultura</span>
                     <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mt-2 mb-6 leading-tight">
-                        A Celebration of Culinary Heritage & Hospitality
+                        A Heritage of Flavor & Elegant Hospitality
                     </h2>
                     <p class="text-gray-300 leading-relaxed mb-6 font-light">
-                        Located at the heart of Legaspi Village inside the Don Pablo Building on Amorsolo Street, Kultura blends modern culinary craftsmanship with deep-rooted traditions of regional Filipino cooking.
+                        Located at the heart of Legaspi Village inside the historic Don Pablo Building on Amorsolo Street, Kultura blends modern culinary craftsmanship with deep-rooted traditions of regional Filipino cooking.
                     </p>
                     <p class="text-gray-400 leading-relaxed mb-8 text-sm">
-                        From slow-roasted whole Lechon with golden crackling skin to rich peanut Kare-Kare and tamarind Sinigang, each dish is a passionate homage to home kitchens across Luzon, Visayas, and Mindanao.
+                        From slow-roasted Lechon with golden crackling skin to rich peanut Kare-Kare and tamarind-sour Sinigang, each dish is a passionate homage to home kitchens across Luzon, Visayas, and Mindanao.
                     </p>
 
                     <div class="grid grid-cols-2 gap-6 border-t border-gray-800 pt-6">
@@ -141,8 +240,8 @@
                                 <i class="fa-solid fa-crown text-gold-400 text-xl"></i>
                             </div>
                             <div>
-                                <h4 class="text-white font-serif font-bold">Premium Quality</h4>
-                                <p class="text-xs text-gray-400 mt-1">Fresh local herbs & prime ingredients</p>
+                                <h4 class="text-white font-serif font-bold">Grand Ambience</h4>
+                                <p class="text-xs text-gray-400 mt-1">Spacious dining halls & private suites</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -151,7 +250,7 @@
                             </div>
                             <div>
                                 <h4 class="text-white font-serif font-bold">Heirloom Recipes</h4>
-                                <p class="text-xs text-gray-400 mt-1">Slow cooked with authentic flavor</p>
+                                <p class="text-xs text-gray-400 mt-1">Slow cooked with authentic spices</p>
                             </div>
                         </div>
                     </div>
@@ -160,70 +259,75 @@
         </div>
     </section>
 
+    <!-- Interactive Menu Section -->
     <section id="menu" class="py-24 bg-black/70 relative border-t border-b border-gold-500/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-12">
-                <span class="text-gold-500 font-semibold tracking-widest uppercase text-sm">Culinary Masterpieces</span>
-                <h2 class="text-3xl sm:text-5xl font-serif font-bold text-white mt-2 mb-4">Our Signature Menu</h2>
-                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto"></div>
-                <p class="text-gray-400 mt-4 text-sm sm:text-base">Click any dish card to explore ingredients and culinary details.</p>
+                <span class="text-gold-400 font-semibold tracking-widest uppercase text-sm">Our Culinary Offerings</span>
+                <h2 class="text-3xl sm:text-5xl font-serif font-bold text-white mt-2 mb-4">The 14 Signature Dishes</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto"></div>
+                <p class="text-gray-400 mt-4 text-sm sm:text-base">Filter by category or click on any dish card to view detailed recipe notes.</p>
             </div>
 
-            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-12" id="filter-buttons">
-                <button onclick="filterMenu('all')" class="filter-btn active px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium transition duration-300 bg-gold-500 text-black shadow-md" data-category="all">
-                    All Dishes
+            <!-- Filter Categories -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12" id="filter-buttons">
+                <button onclick="filterMenu('all')" class="filter-btn active px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition duration-300 bg-gold-400 text-black shadow-md" data-category="all">
+                    All Dishes (14)
                 </button>
-                <button onclick="filterMenu('appetizer')" class="filter-btn px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium transition duration-300 glass-card text-gray-300 hover:text-gold-400 border-gold-500/20" data-category="appetizer">
-                    Appetizers
+                <button onclick="filterMenu('starters')" class="filter-btn px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition duration-300 glass-card text-gray-300 hover:text-gold-400 border-gold-500/20" data-category="starters">
+                    Starters
                 </button>
-                <button onclick="filterMenu('soup')" class="filter-btn px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium transition duration-300 glass-card text-gray-300 hover:text-gold-400 border-gold-500/20" data-category="soup">
+                <button onclick="filterMenu('mains')" class="filter-btn px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition duration-300 glass-card text-gray-300 hover:text-gold-400 border-gold-500/20" data-category="mains">
+                    Main Courses
+                </button>
+                <button onclick="filterMenu('soups-noodles')" class="filter-btn px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition duration-300 glass-card text-gray-300 hover:text-gold-400 border-gold-500/20" data-category="soups-noodles">
                     Soups & Noodles
                 </button>
-                <button onclick="filterMenu('mains')" class="filter-btn px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium transition duration-300 glass-card text-gray-300 hover:text-gold-400 border-gold-500/20" data-category="mains">
-                    Mains
-                </button>
-                <button onclick="filterMenu('dessert')" class="filter-btn px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium transition duration-300 glass-card text-gray-300 hover:text-gold-400 border-gold-500/20" data-category="dessert">
+                <button onclick="filterMenu('desserts')" class="filter-btn px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition duration-300 glass-card text-gray-300 hover:text-gold-400 border-gold-500/20" data-category="desserts">
                     Desserts
                 </button>
             </div>
 
+            <!-- Dynamic Menu Grid Container -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="menu-grid">
+                <!-- JavaScript populates all 14 dishes -->
             </div>
         </div>
     </section>
 
+    <!-- Gallery Section -->
     <section id="gallery" class="py-20 bg-charcoal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
                 <div>
-                    <span class="text-gold-500 font-semibold tracking-widest uppercase text-sm">Visual Feast</span>
+                    <span class="text-gold-400 font-semibold tracking-widest uppercase text-sm">Visual Showcase</span>
                     <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mt-1">The Kultura Experience</h2>
                 </div>
                 <p class="text-gray-400 text-sm max-w-md mt-4 md:mt-0">
-                    A glimpse into our grand venue and thoughtfully presented traditional Filipino creations.
+                    A glimpse inside our Don Pablo Building establishment and signature traditional Filipino presentations.
                 </p>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="group relative overflow-hidden rounded-xl h-64 border border-gold-500/20 cursor-pointer" onclick="openImageModal('https://images.squarespace-cdn.com/content/v1/5fa1522044bdda192713063c/ec48138e-70aa-46c1-ab34-62ddc4410f9b/Buffet+101+International+Cuisine+in+Glorietta?format=2500w', 'Grand Buffet & Fine Dining Architecture')">
+                <div class="group relative overflow-hidden rounded-xl h-64 border border-gold-500/20 cursor-pointer" onclick="openImageModal('https://images.squarespace-cdn.com/content/v1/5fa1522044bdda192713063c/ec48138e-70aa-46c1-ab34-62ddc4410f9b/Buffet+101+International+Cuisine+in+Glorietta?format=2500w', 'Grand Dining Interior')">
                     <img src="https://images.squarespace-cdn.com/content/v1/5fa1522044bdda192713063c/ec48138e-70aa-46c1-ab34-62ddc4410f9b/Buffet+101+International+Cuisine+in+Glorietta?format=2500w" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Dining Hall">
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
                         <i class="fa-solid fa-magnifying-glass-plus text-gold-400 text-2xl"></i>
                     </div>
                 </div>
-                <div class="group relative overflow-hidden rounded-xl h-64 border border-gold-500/20 cursor-pointer" onclick="openImageModal('https://brenontheroad.smugmug.com/Filipino-Food/i-6BvpJLv/0/L/DSC05074-L.jpg', 'Golden Crispy Roast Lechon')">
+                <div class="group relative overflow-hidden rounded-xl h-64 border border-gold-500/20 cursor-pointer" onclick="openImageModal('https://brenontheroad.smugmug.com/Filipino-Food/i-6BvpJLv/0/L/DSC05074-L.jpg', 'Roasted Whole Lechon')">
                     <img src="https://brenontheroad.smugmug.com/Filipino-Food/i-6BvpJLv/0/L/DSC05074-L.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Lechon Feast">
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
                         <i class="fa-solid fa-magnifying-glass-plus text-gold-400 text-2xl"></i>
                     </div>
                 </div>
-                <div class="group relative overflow-hidden rounded-xl h-64 border border-gold-500/20 cursor-pointer" onclick="openImageModal('https://brenontheroad.smugmug.com/Filipino-Food/i-3HbvLLt/0/L/DSC05228-L.jpg', 'Deep Fried Crispy Pata')">
+                <div class="group relative overflow-hidden rounded-xl h-64 border border-gold-500/20 cursor-pointer" onclick="openImageModal('https://brenontheroad.smugmug.com/Filipino-Food/i-3HbvLLt/0/L/DSC05228-L.jpg', 'Golden Crispy Pata')">
                     <img src="https://brenontheroad.smugmug.com/Filipino-Food/i-3HbvLLt/0/L/DSC05228-L.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Crispy Pata">
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
                         <i class="fa-solid fa-magnifying-glass-plus text-gold-400 text-2xl"></i>
                     </div>
                 </div>
-                <div class="group relative overflow-hidden rounded-xl h-64 border border-gold-500/20 cursor-pointer" onclick="openImageModal('https://brenontheroad.smugmug.com/Filipino-Food/i-sL9jHbr/0/L/DSC04429-L.jpg', 'Caramel Custard Leche Flan')">
+                <div class="group relative overflow-hidden rounded-xl h-64 border border-gold-500/20 cursor-pointer" onclick="openImageModal('https://brenontheroad.smugmug.com/Filipino-Food/i-sL9jHbr/0/L/DSC04429-L.jpg', 'Decadent Leche Flan')">
                     <img src="https://brenontheroad.smugmug.com/Filipino-Food/i-sL9jHbr/0/L/DSC04429-L.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Leche Flan Dessert">
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
                         <i class="fa-solid fa-magnifying-glass-plus text-gold-400 text-2xl"></i>
@@ -233,15 +337,17 @@
         </div>
     </section>
 
+    <!-- Contact & Reservation Section -->
     <section id="contact" class="py-24 bg-gradient-to-b from-charcoal via-black to-charcoal border-t border-gold-500/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
                 
+                <!-- Contact Info Column -->
                 <div class="lg:col-span-5 space-y-8">
                     <div>
-                        <span class="text-gold-500 font-semibold tracking-widest uppercase text-sm">Find & Connect</span>
+                        <span class="text-gold-400 font-semibold tracking-widest uppercase text-sm">Find & Connect</span>
                         <h2 class="text-3xl sm:text-4xl font-serif font-bold text-white mt-2">Visit Kultura</h2>
-                        <p class="text-gray-400 mt-3 text-sm">We welcome family gatherings, corporate celebrations, and intimate dining experiences.</p>
+                        <p class="text-gray-400 mt-3 text-sm">We welcome family gatherings, corporate banquets, and grand celebrations.</p>
                     </div>
 
                     <div class="space-y-6">
@@ -250,9 +356,9 @@
                                 <i class="fa-solid fa-location-dot text-gold-400"></i>
                             </div>
                             <div>
-                                <h4 class="text-white font-medium text-sm">Restaurant Address</h4>
-                                <p class="text-gray-300 text-sm mt-0.5">Don Pablo Building, Amorsolo Street, Legaspi Village</p>
-                                <p class="text-xs text-gold-500 mt-1">Makati City, Metro Manila, Philippines</p>
+                                <h4 class="text-white font-medium text-sm">Exact Address</h4>
+                                <p class="text-gold-400 font-medium text-sm mt-0.5">Don Pablo Building, Amorsolo Street, Legaspi Village</p>
+                                <p class="text-xs text-gray-400 mt-1">Makati City, Metro Manila, Philippines</p>
                             </div>
                         </div>
 
@@ -261,49 +367,50 @@
                                 <i class="fa-solid fa-phone text-gold-400"></i>
                             </div>
                             <div>
-                                <h4 class="text-white font-medium text-sm">Direct Phone Hotline</h4>
+                                <h4 class="text-white font-medium text-sm">Contact Hotline</h4>
                                 <p class="text-gold-400 font-mono text-base font-bold mt-0.5">0543-112-5689</p>
-                                <p class="text-xs text-gray-400 mt-1">For instant bookings & private function inquiries</p>
+                                <p class="text-xs text-gray-400 mt-1">Call for advance table bookings & VIP room reservations</p>
                             </div>
                         </div>
 
                         <div class="flex items-start gap-4 glass-card p-5 rounded-xl border border-gold-500/20">
                             <div class="w-10 h-10 rounded-lg bg-gold-500/10 border border-gold-500/30 flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-clock text-gold-400"></i>
+                                <i class="fa-solid fa-calendar text-gold-400"></i>
                             </div>
                             <div>
-                                <h4 class="text-white font-medium text-sm">Opening Hours</h4>
-                                <p class="text-gray-300 text-sm mt-0.5">Monday – Sunday: 11:00 AM – 10:00 PM</p>
-                                <p class="text-xs text-gray-400 mt-1">Lunch Buffet & Dinner Service</p>
+                                <h4 class="text-white font-medium text-sm">Grand Opening Date</h4>
+                                <p class="text-gray-200 text-sm mt-0.5">February 1, 2027</p>
+                                <p class="text-xs text-gold-400 mt-1">Countdown currently running live above</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Table Reservation Form -->
                 <div class="lg:col-span-7 glass-card p-8 rounded-2xl border border-gold-500/30 gold-glow-sm relative">
                     <h3 class="text-2xl font-serif font-bold text-white mb-2">Book a Table</h3>
-                    <p class="text-xs text-gray-400 mb-6">Reserve your table online and secure your dining slot instantly.</p>
+                    <p class="text-xs text-gray-400 mb-6">Reserve your dining slot for our opening and general service.</p>
 
                     <form id="reservationForm" onsubmit="handleReservation(event)" class="space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs text-gray-300 font-medium mb-1">Full Name</label>
-                                <input type="text" required placeholder="Juan Dela Cruz" class="w-full bg-black/50 border border-gray-700 focus:border-gold-500 text-white rounded-lg px-4 py-2.5 text-sm outline-none gold-border-glow transition">
+                                <input type="text" required placeholder="Juan Dela Cruz" class="w-full bg-black/50 border border-gray-700 focus:border-gold-400 text-white rounded-lg px-4 py-2.5 text-sm outline-none gold-border-glow transition">
                             </div>
                             <div>
                                 <label class="block text-xs text-gray-300 font-medium mb-1">Contact Number</label>
-                                <input type="tel" required placeholder="0912 345 6789" class="w-full bg-black/50 border border-gray-700 focus:border-gold-500 text-white rounded-lg px-4 py-2.5 text-sm outline-none gold-border-glow transition">
+                                <input type="tel" required placeholder="0912 345 6789" class="w-full bg-black/50 border border-gray-700 focus:border-gold-400 text-white rounded-lg px-4 py-2.5 text-sm outline-none gold-border-glow transition">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-xs text-gray-300 font-medium mb-1">Date</label>
-                                <input type="date" id="res-date" required class="w-full bg-black/50 border border-gray-700 focus:border-gold-500 text-white rounded-lg px-3 py-2.5 text-sm outline-none gold-border-glow transition">
+                                <input type="date" id="res-date" required class="w-full bg-black/50 border border-gray-700 focus:border-gold-400 text-white rounded-lg px-3 py-2.5 text-sm outline-none gold-border-glow transition">
                             </div>
                             <div>
                                 <label class="block text-xs text-gray-300 font-medium mb-1">Preferred Time</label>
-                                <select required class="w-full bg-black/50 border border-gray-700 focus:border-gold-500 text-white rounded-lg px-3 py-2.5 text-sm outline-none gold-border-glow transition">
+                                <select required class="w-full bg-black/50 border border-gray-700 focus:border-gold-400 text-white rounded-lg px-3 py-2.5 text-sm outline-none gold-border-glow transition">
                                     <option value="">Select Time</option>
                                     <option>11:30 AM (Lunch)</option>
                                     <option>01:00 PM (Lunch)</option>
@@ -314,7 +421,7 @@
                             </div>
                             <div>
                                 <label class="block text-xs text-gray-300 font-medium mb-1">Party Size</label>
-                                <select required class="w-full bg-black/50 border border-gray-700 focus:border-gold-500 text-white rounded-lg px-3 py-2.5 text-sm outline-none gold-border-glow transition">
+                                <select required class="w-full bg-black/50 border border-gray-700 focus:border-gold-400 text-white rounded-lg px-3 py-2.5 text-sm outline-none gold-border-glow transition">
                                     <option>2 Persons</option>
                                     <option>4 Persons</option>
                                     <option>6 Persons</option>
@@ -325,11 +432,11 @@
 
                         <div>
                             <label class="block text-xs text-gray-300 font-medium mb-1">Special Requests (Optional)</label>
-                            <textarea rows="3" placeholder="Dietary restrictions, anniversary celebration, window table..." class="w-full bg-black/50 border border-gray-700 focus:border-gold-500 text-white rounded-lg px-4 py-2 text-sm outline-none gold-border-glow transition"></textarea>
+                            <textarea rows="3" placeholder="Dietary needs, window seating, anniversary setup..." class="w-full bg-black/50 border border-gray-700 focus:border-gold-400 text-white rounded-lg px-4 py-2 text-sm outline-none gold-border-glow transition"></textarea>
                         </div>
 
-                        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 text-black font-bold text-sm hover:from-gold-400 hover:to-gold-500 transition duration-300 shadow-md gold-glow-sm">
-                            Confirm Table Reservation
+                        <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-gold-400 to-gold-600 text-black font-bold text-sm hover:from-gold-300 hover:to-gold-500 transition duration-300 shadow-md gold-glow-sm">
+                            Submit Reservation Request
                         </button>
                     </form>
                 </div>
@@ -338,26 +445,29 @@
         </div>
     </section>
 
+    <!-- Footer Section -->
     <footer class="bg-black text-gray-400 border-t border-gold-500/20 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+                <!-- Brand Summary -->
                 <div class="md:col-span-2 space-y-4">
                     <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full border border-gold-500 flex items-center justify-center bg-gold-500/10">
-                            <span class="font-serif font-bold text-gold-500">K</span>
+                        <div class="w-9 h-9 rounded-full border border-gold-400 flex items-center justify-center bg-gold-400/10">
+                            <span class="font-serif font-bold text-gold-400">K</span>
                         </div>
                         <span class="text-xl font-serif font-bold text-white tracking-wider">KULTURA FILIPINO CUISINE</span>
                     </div>
                     <p class="text-sm text-gray-400 max-w-md leading-relaxed">
-                        Fine Filipino gastronomy crafted with passion. Perfect for cherished family reunions, celebrations, and corporate dinners.
+                        Fine traditional Filipino gastronomy. Join us for an unforgettable dining journey starting February 1, 2027.
                     </p>
                     <div class="flex items-center space-x-4 pt-2">
-                        <a href="#" class="w-9 h-9 rounded-full bg-cardDark border border-gray-800 flex items-center justify-center text-gray-300 hover:text-gold-400 hover:border-gold-500 transition"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-cardDark border border-gray-800 flex items-center justify-center text-gray-300 hover:text-gold-400 hover:border-gold-500 transition"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-cardDark border border-gray-800 flex items-center justify-center text-gray-300 hover:text-gold-400 hover:border-gold-500 transition"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-cardDark border border-gray-800 flex items-center justify-center text-gray-300 hover:text-gold-400 hover:border-gold-400 transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-cardDark border border-gray-800 flex items-center justify-center text-gray-300 hover:text-gold-400 hover:border-gold-400 transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-cardDark border border-gray-800 flex items-center justify-center text-gray-300 hover:text-gold-400 hover:border-gold-400 transition"><i class="fa-brands fa-tiktok"></i></a>
                     </div>
                 </div>
 
+                <!-- Navigation Links -->
                 <div>
                     <h4 class="text-white font-serif font-semibold text-base mb-4 border-b border-gold-500/30 pb-2 inline-block">Quick Links</h4>
                     <ul class="space-y-2 text-sm">
@@ -369,32 +479,31 @@
                     </ul>
                 </div>
 
+                <!-- Footer Contact Info -->
                 <div>
-                    <h4 class="text-white font-serif font-semibold text-base mb-4 border-b border-gold-500/30 pb-2 inline-block">Contact Info</h4>
+                    <h4 class="text-white font-serif font-semibold text-base mb-4 border-b border-gold-500/30 pb-2 inline-block">Contact & Address</h4>
                     <ul class="space-y-3 text-sm">
                         <li class="flex items-start gap-2">
-                            <i class="fa-solid fa-phone text-gold-500 mt-1"></i>
-                            <span class="text-gold-400 font-mono font-semibold">0543-112-5689</span>
+                            <i class="fa-solid fa-phone text-gold-400 mt-1"></i>
+                            <span class="text-gold-400 font-mono font-bold">0543-112-5689</span>
                         </li>
                         <li class="flex items-start gap-2">
-                            <i class="fa-solid fa-location-dot text-gold-500 mt-1"></i>
-                            <span>Don Pablo Building, Amorsolo Street, Legaspi Village</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <i class="fa-solid fa-envelope text-gold-500 mt-1"></i>
-                            <span>reservations@kulturacuisine.ph</span>
+                            <i class="fa-solid fa-location-dot text-gold-400 mt-1"></i>
+                            <span class="text-gray-300">Don Pablo Building, Amorsolo Street, Legaspi Village</span>
                         </li>
                     </ul>
                 </div>
             </div>
 
+            <!-- Bottom Bar -->
             <div class="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
                 <p>&copy; <span id="year"></span> Kultura Filipino Cuisine. All Rights Reserved.</p>
-                <p class="mt-2 sm:mt-0">Don Pablo Building, Amorsolo St, Legaspi Village</p>
+                <p class="mt-2 sm:mt-0">Don Pablo Building, Amorsolo Street, Legaspi Village</p>
             </div>
         </div>
     </footer>
 
+    <!-- Dish Info Modal -->
     <div id="dishModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
         <div class="glass-card max-w-xl w-full rounded-2xl overflow-hidden border border-gold-500/40 relative shadow-2xl">
             <button onclick="closeDishModal()" class="absolute top-4 right-4 z-10 w-9 h-9 bg-black/70 rounded-full text-gray-300 hover:text-white flex items-center justify-center border border-gray-700">
@@ -403,24 +512,25 @@
             <div class="h-64 relative overflow-hidden bg-black">
                 <img id="modal-dish-img" src="" alt="Dish Detail" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                <span id="modal-dish-cat" class="absolute bottom-4 left-4 px-3 py-1 bg-gold-500 text-black text-xs font-bold rounded-full uppercase tracking-wider"></span>
+                <span id="modal-dish-cat" class="absolute bottom-4 left-4 px-3 py-1 bg-gold-400 text-black text-xs font-bold rounded-full uppercase tracking-wider"></span>
             </div>
             <div class="p-6">
                 <h3 id="modal-dish-title" class="text-2xl font-serif font-bold text-white mb-2"></h3>
                 <p id="modal-dish-desc" class="text-gray-300 text-sm leading-relaxed mb-6"></p>
                 
                 <div class="bg-black/50 border border-gray-800 rounded-xl p-4 mb-6">
-                    <h4 class="text-xs font-semibold text-gold-400 uppercase tracking-wider mb-2">Heritage Preparation & Ingredients</h4>
+                    <h4 class="text-xs font-semibold text-gold-400 uppercase tracking-wider mb-2">Preparation & Key Ingredients</h4>
                     <p id="modal-dish-ingredients" class="text-xs text-gray-400 leading-relaxed"></p>
                 </div>
 
-                <button onclick="closeDishModal(); openReservationModal();" class="w-full py-3.5 bg-gold-500 hover:bg-gold-400 text-black font-bold rounded-xl text-sm transition shadow-lg gold-glow-sm">
-                    Book Table to Experience Dish
+                <button onclick="closeDishModal(); openReservationModal();" class="w-full py-3.5 bg-gold-400 hover:bg-gold-300 text-black font-bold rounded-xl text-sm transition shadow-lg gold-glow-sm">
+                    Reserve Table for Opening Day
                 </button>
             </div>
         </div>
     </div>
 
+    <!-- Image Lightbox Modal -->
     <div id="imageModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" onclick="closeImageModal()">
         <div class="relative max-w-4xl w-full text-center" onclick="event.stopPropagation()">
             <button onclick="closeImageModal()" class="absolute -top-12 right-0 text-white text-2xl hover:text-gold-400">
@@ -431,15 +541,16 @@
         </div>
     </div>
 
-    <div id="toast" class="fixed bottom-6 right-6 z-50 hidden glass-card border border-gold-500 px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3">
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 hidden glass-card border border-gold-400 px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3">
         <i class="fa-solid fa-circle-check text-gold-400 text-2xl"></i>
         <div>
-            <p class="text-sm font-bold text-white">Reservation Request Sent!</p>
-            <p class="text-xs text-gray-300">We look forward to serving you at Don Pablo Building, Legaspi Village.</p>
+            <p class="text-sm font-bold text-white">Reservation Submitted!</p>
+            <p class="text-xs text-gray-300">Don Pablo Building, Amorsolo St, Legaspi Village.</p>
         </div>
     </div>
 
-    <!-- Custom JavaScript -->
+    <!-- External JavaScript File -->
     <script src="script.js"></script>
 </body>
 </html>
